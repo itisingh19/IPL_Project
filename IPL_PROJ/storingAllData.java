@@ -74,7 +74,8 @@ public class storingAllData{
     public static ArrayList<String> winner = new ArrayList<String>();
     public static int countMatch = 0;
     public static ArrayList<String> matchIdfor2016 = new ArrayList<String>();
-    public static LinkedHashMap<String, Integer> seasonAndCountTeamsPlayed = new LinkedHashMap<String, Integer>();
+    public static LinkedHashMap<String, Integer> extra_runs_by_teams_played_in_2016 = new LinkedHashMap<String, Integer>();
+    public static ArrayList<String> teamsPlayedIn2016 = new ArrayList<String>();
 
     public static void allDataMatches(String[] matchesInfo){
         
@@ -92,6 +93,9 @@ public class storingAllData{
         }
         if(matchesInfo[1].equals(two_zero_one_six)){
             matchIdfor2016.add(matchesInfo[0]);
+            if(!(teamsPlayedIn2016.contains(matchesInfo[4]))){
+                teamsPlayedIn2016.add(matchesInfo[4]);
+            }
         }
         winner.add(matchesInfo[10]);
         
@@ -100,17 +104,26 @@ public class storingAllData{
     
     public static void allDataDeliveries(String[] deliveriesInfo){
         
+        int extra_runs = Integer.parseInt(deliveriesInfo[16]);
+        if(extra_runs_by_teams_played_in_2016.containsKey(deliveriesInfo[2])){
+            int prev_runs = extra_runs_by_teams_played_in_2016.get(deliveriesInfo[2]);
+            extra_runs_by_teams_played_in_2016.put(deliveriesInfo[2], prev_runs + extra_runs);
 
+        }
+        else{
+            extra_runs_by_teams_played_in_2016.put(deliveriesInfo[2],extra_runs);
+        }
+        
     }
 
     public static void main(String[] args) {
         ReadingFilematches();
-        //ReadingFileDeliveries();
-        //System.out.println(winner);
+        ReadingFileDeliveries();
         noOfMatchesPlayedINEachSeason(season);
-        System.out.println("  ");
+        System.out.println("");
         noOfMatchesWonOffAllTeams(teamsPlayed, winner);
-        //System.out.println(matchIdfor2016);
+        System.out.println("");
+        System.out.println(extra_runs_by_teams_played_in_2016);
     }
 
     public static void noOfMatchesPlayedINEachSeason(ArrayList<String> list)
