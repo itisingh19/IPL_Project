@@ -79,7 +79,8 @@ public class storingAllData{
     public static ArrayList<String> teamsPlayedIn2016 = new ArrayList<String>();
     public static List<String> matchIdfor2015 = new ArrayList<String>();
     public static List<String> playersPlayedIn2015 = new ArrayList<String>();
-    public static LinkedHashMap<String, Integer> runs_made_by_each_player_in_2015 = new LinkedHashMap<String, Integer>();
+    public static LinkedHashMap<String, Integer> runs_bowler_gave_in_2015 = new LinkedHashMap<String, Integer>();
+    public static LinkedHashMap<String, Integer> balls_played_by_each_bowler_in_2015 = new LinkedHashMap<String, Integer>();
 
 
 
@@ -127,13 +128,24 @@ public class storingAllData{
         else{
             extra_runs_by_teams_played_in_2016.put(deliveriesInfo[2],extra_runs);
         }
+
         if(matchIdfor2015.contains(deliveriesInfo[0])){
 
-            if(!(playersPlayedIn2015.contains(deliveriesInfo[6]))){
-                playersPlayedIn2015.add(deliveriesInfo[6]);
+            if(!(playersPlayedIn2015.contains(deliveriesInfo[8]))){
+                playersPlayedIn2015.add(deliveriesInfo[8]);    
+                
             }
-            if(!(playersPlayedIn2015.contains(deliveriesInfo[7]))){
-                playersPlayedIn2015.add(deliveriesInfo[7]);
+            if(runs_bowler_gave_in_2015.containsKey(deliveriesInfo[8])){
+                int prev_runs_gave = runs_bowler_gave_in_2015.get(deliveriesInfo[8]);
+                int run_to_be_added = Integer.parseInt(deliveriesInfo[17]) - Integer.parseInt(deliveriesInfo[16]);
+                runs_bowler_gave_in_2015.put(deliveriesInfo[8], prev_runs_gave + run_to_be_added);
+                int prev_balls = balls_played_by_each_bowler_in_2015.get(deliveriesInfo[8]);
+                balls_played_by_each_bowler_in_2015.put(deliveriesInfo[8], prev_balls+1);
+            }
+            else{
+                int run_to_be_added = Integer.parseInt(deliveriesInfo[17]) - Integer.parseInt(deliveriesInfo[16]);
+                runs_bowler_gave_in_2015.put(deliveriesInfo[8], run_to_be_added);
+                balls_played_by_each_bowler_in_2015.put(deliveriesInfo[8], 1);
             }
         
         }
@@ -155,6 +167,8 @@ public class storingAllData{
         System.out.println(extra_runs_by_teams_played_in_2016);
         System.out.println(matchIdfor2015);
         System.out.println(playersPlayedIn2015);
+        System.out.println(runs_bowler_gave_in_2015);
+        System.out.println(balls_played_by_each_bowler_in_2015);
     }
 
     public static void noOfMatchesPlayedINEachSeason(ArrayList<String> list)
