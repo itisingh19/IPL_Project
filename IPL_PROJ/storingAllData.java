@@ -39,6 +39,34 @@ public class storingAllData{
             }
         }
     }
+
+    public static void ReadingFileDeliveries() {
+        int count_for_first_line = 0;
+        String line = "";
+        String Splitby = ",";
+        String deliveriesFile = "deliveries.csv";
+        BufferedReader buffer = null;
+        try{
+            buffer = new BufferedReader(new FileReader(deliveriesFile));
+            while((line = buffer.readLine())!= null){
+                if(count_for_first_line>1){
+                    String[] lst = line.split(Splitby);
+                    allDataDeliveries(lst);
+                }
+                count_for_first_line++;
+            }
+        }
+        catch(Exception e){
+            if(buffer != null){
+                try{
+                    buffer.close();
+                }
+                catch(IOException f){
+                    e.getStackTrace();
+                }
+            }
+        }
+    }
     
     public static ArrayList<String> matchId = new ArrayList<String>();
     public static ArrayList<String> teamsPlayed = new ArrayList<String>();
@@ -70,6 +98,11 @@ public class storingAllData{
         
     }
     
+    public static void allDataDeliveries(String[] deliveriesInfo){
+        
+
+    }
+
     public static void main(String[] args) {
         ReadingFilematches();
         //ReadingFileDeliveries();
