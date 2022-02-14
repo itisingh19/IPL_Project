@@ -75,7 +75,8 @@ public class storingAllData{
         //ReadingFileDeliveries();
         //System.out.println(winner);
         noOfMatchesPlayedINEachSeason(season);
-        //noOfMatchesWonOffAllTeams(teamsPlayed, winner);
+        System.out.println("  ");
+        noOfMatchesWonOffAllTeams(teamsPlayed, winner);
         //System.out.println(matchIdfor2016);
     }
 
@@ -86,6 +87,11 @@ public class storingAllData{
             System.out.println(s + ": " + Collections.frequency(list, s));
     }
 
-    
+    public static void noOfMatchesWonOffAllTeams(ArrayList<String> teams, ArrayList<String> Winners){
+        Set<String> st = new HashSet<String>(teams);
+        for (String s : st)
+            System.out.println(s + ": " + Collections.frequency(Winners, s));
+
+    }
 
 }
