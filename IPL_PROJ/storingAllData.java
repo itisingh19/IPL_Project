@@ -79,11 +79,11 @@ public class storingAllData{
     public static ArrayList<String> teamsPlayedIn2016 = new ArrayList<String>();
     public static List<String> matchIdfor2015 = new ArrayList<String>();
     public static List<String> playersPlayedIn2015 = new ArrayList<String>();
-    public static LinkedHashMap<String, Integer> runs_bowler_gave_in_2015 = new LinkedHashMap<String, Integer>();
-    public static LinkedHashMap<String, Integer> overs_played_by_each_bowler_in_2015 = new LinkedHashMap<String, Integer>();
+    public static LinkedHashMap<String, Integer> runsBowlerGvaeIn2015 = new LinkedHashMap<String, Integer>();
+    public static LinkedHashMap<String, Integer> oversPlayedByEachPlayerIn2015 = new LinkedHashMap<String, Integer>();
     public static LinkedHashMap<String, Integer> moEconomicBowlers = new LinkedHashMap<String, Integer>();
-
-
+    public static ArrayList<String> tossWinnerDetails = new ArrayList<String>();
+    public static LinkedHashMap<String, Integer> noOfTimesEachTeamWonToss = new LinkedHashMap<String, Integer>();
 
     public static void allDataMatches(String[] matchesInfo){
         
@@ -94,6 +94,7 @@ public class storingAllData{
         String two_zero_one_five = "2015";
         matchId.add(matchesInfo[0]);
         season.add(matchesInfo[1]);
+        tossWinnerDetails.add(matchesInfo[6]);
 
         if(!(teamsPlayed.contains(matchesInfo[4]))){
             teamsPlayed.add(matchesInfo[4]);
@@ -136,17 +137,17 @@ public class storingAllData{
                 playersPlayedIn2015.add(deliveriesInfo[8]);    
                 
             }
-            if(runs_bowler_gave_in_2015.containsKey(deliveriesInfo[8])){
-                int prev_runs_gave = runs_bowler_gave_in_2015.get(deliveriesInfo[8]);
+            if(runsBowlerGvaeIn2015.containsKey(deliveriesInfo[8])){
+                int prev_runs_gave = runsBowlerGvaeIn2015.get(deliveriesInfo[8]);
                 int run_to_be_added = Integer.parseInt(deliveriesInfo[17]) - Integer.parseInt(deliveriesInfo[16]);
-                runs_bowler_gave_in_2015.put(deliveriesInfo[8], prev_runs_gave + run_to_be_added);
-                int prev_balls = overs_played_by_each_bowler_in_2015.get(deliveriesInfo[8]);
-                overs_played_by_each_bowler_in_2015.put(deliveriesInfo[8], prev_balls+1);
+                runsBowlerGvaeIn2015.put(deliveriesInfo[8], prev_runs_gave + run_to_be_added);
+                int prev_balls = oversPlayedByEachPlayerIn2015.get(deliveriesInfo[8]);
+                oversPlayedByEachPlayerIn2015.put(deliveriesInfo[8], prev_balls+1);
             }
             else{
                 int run_to_be_added = Integer.parseInt(deliveriesInfo[17]) - Integer.parseInt(deliveriesInfo[16]);
-                runs_bowler_gave_in_2015.put(deliveriesInfo[8], run_to_be_added);
-                overs_played_by_each_bowler_in_2015.put(deliveriesInfo[8], 1/6);
+                runsBowlerGvaeIn2015.put(deliveriesInfo[8], run_to_be_added);
+                oversPlayedByEachPlayerIn2015.put(deliveriesInfo[8], 1/6);
             }
         
         }
@@ -158,7 +159,7 @@ public class storingAllData{
             int val = mapEle.getValue();
             balls_bowler_throw.put(mapEle.getKey(), val/6 );
             val = val/6;
-            int total_run_by_bowler = runs_bowler_gave_in_2015.get(mapEle.getKey());
+            int total_run_by_bowler = runsBowlerGvaeIn2015.get(mapEle.getKey());
             moEconomicBowlers.put(mapEle.getKey(),total_run_by_bowler/val);
 
         }
@@ -172,6 +173,15 @@ public class storingAllData{
         }
         
         
+
+    }
+    public static void teamThatWonMAximumToss(ArrayList<String> tossWinners){
+
+        Set<String> st = new HashSet<String>(tossWinners);
+        for (String s : st)
+            noOfTimesEachTeamWonToss.put(s,Collections.frequency(tossWinners, s));
+        String max_toss_winner_team = Collections.max(noOfTimesEachTeamWonToss.keySet());
+        System.out.println(max_toss_winner_team);
 
     }
 
@@ -188,7 +198,11 @@ public class storingAllData{
         System.out.println(extra_runs_by_teams_played_in_2016);
         System.out.println("");
         System.out.println("Most Econimical Bowlers : ");
-        gettingTopEconomicalBowlers(runs_bowler_gave_in_2015, overs_played_by_each_bowler_in_2015);
+        gettingTopEconomicalBowlers(runsBowlerGvaeIn2015, oversPlayedByEachPlayerIn2015);
+        System.out.println("");
+        System.out.println("Make a scenario: Finding Which Team Won Maximum Toss - ");
+        teamThatWonMAximumToss(tossWinnerDetails);
+        
         
     }
 
