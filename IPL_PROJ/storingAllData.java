@@ -5,9 +5,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 
 
@@ -80,7 +83,8 @@ public class storingAllData{
     public static List<String> matchIdfor2015 = new ArrayList<String>();
     public static List<String> playersPlayedIn2015 = new ArrayList<String>();
     public static LinkedHashMap<String, Integer> runs_bowler_gave_in_2015 = new LinkedHashMap<String, Integer>();
-    public static LinkedHashMap<String, Integer> balls_played_by_each_bowler_in_2015 = new LinkedHashMap<String, Integer>();
+    public static LinkedHashMap<String, Integer> overs_played_by_each_bowler_in_2015 = new LinkedHashMap<String, Integer>();
+    public static LinkedHashMap<String, Integer> moEconomicBowlers = new LinkedHashMap<String, Integer>();
 
 
 
@@ -139,21 +143,38 @@ public class storingAllData{
                 int prev_runs_gave = runs_bowler_gave_in_2015.get(deliveriesInfo[8]);
                 int run_to_be_added = Integer.parseInt(deliveriesInfo[17]) - Integer.parseInt(deliveriesInfo[16]);
                 runs_bowler_gave_in_2015.put(deliveriesInfo[8], prev_runs_gave + run_to_be_added);
-                int prev_balls = balls_played_by_each_bowler_in_2015.get(deliveriesInfo[8]);
-                balls_played_by_each_bowler_in_2015.put(deliveriesInfo[8], prev_balls+1);
+                int prev_balls = overs_played_by_each_bowler_in_2015.get(deliveriesInfo[8]);
+                overs_played_by_each_bowler_in_2015.put(deliveriesInfo[8], prev_balls+1);
             }
             else{
                 int run_to_be_added = Integer.parseInt(deliveriesInfo[17]) - Integer.parseInt(deliveriesInfo[16]);
                 runs_bowler_gave_in_2015.put(deliveriesInfo[8], run_to_be_added);
-                balls_played_by_each_bowler_in_2015.put(deliveriesInfo[8], 1);
+                overs_played_by_each_bowler_in_2015.put(deliveriesInfo[8], 1/6);
             }
         
         }
         
     }
 
-    public static void gettingTopEconomicalBowlers(String[] playersPlayedIn2015){
+    public static void gettingTopEconomicalBowlers(LinkedHashMap<String, Integer> runs_bowler_gave, LinkedHashMap<String, Integer> balls_bowler_throw){
+        for(Map.Entry<String, Integer> mapEle: balls_bowler_throw.entrySet()){
+            int val = mapEle.getValue();
+            balls_bowler_throw.put(mapEle.getKey(), val/6 );
+            val = val/6;
+            int total_run_by_bowler = runs_bowler_gave_in_2015.get(mapEle.getKey());
+            moEconomicBowlers.put(mapEle.getKey(),total_run_by_bowler/val);
 
+        }
+
+        
+        Integer minKey = Collections.min(moEconomicBowlers.values());
+        for(Map.Entry<String, Integer> mapEle: moEconomicBowlers.entrySet()){
+            if((mapEle.getValue()).equals(minKey)){
+                System.out.println(mapEle.getKey());
+            }
+        }
+        
+        
 
     }
 
@@ -165,10 +186,12 @@ public class storingAllData{
         noOfMatchesWonOffAllTeams(teamsPlayed, winner);
         System.out.println("");
         System.out.println(extra_runs_by_teams_played_in_2016);
-        System.out.println(matchIdfor2015);
-        System.out.println(playersPlayedIn2015);
-        System.out.println(runs_bowler_gave_in_2015);
-        System.out.println(balls_played_by_each_bowler_in_2015);
+        //System.out.println(matchIdfor2015);
+        //System.out.println(playersPlayedIn2015);
+        //System.out.println(runs_bowler_gave_in_2015);
+        gettingTopEconomicalBowlers(runs_bowler_gave_in_2015, overs_played_by_each_bowler_in_2015);
+        //System.out.println(overs_played_by_each_bowler_in_2015);
+
     }
 
     public static void noOfMatchesPlayedINEachSeason(ArrayList<String> list)
