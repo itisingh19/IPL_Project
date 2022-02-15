@@ -13,6 +13,24 @@ import java.util.HashSet;
 
 
 public class storingAllData{
+
+    private static ArrayList<String> matchId = new ArrayList<String>();
+    private static ArrayList<String> teamsPlayed = new ArrayList<String>();
+    private static ArrayList<String> season = new ArrayList<String>();
+    private static ArrayList<String> winner = new ArrayList<String>();
+    public static int countMatch = 0;
+    private static ArrayList<String> matchIdfor2016 = new ArrayList<String>();
+    private static LinkedHashMap<String, Integer> extra_runs_by_teams_played_in_2016 = new LinkedHashMap<String, Integer>();
+    private static ArrayList<String> teamsPlayedIn2016 = new ArrayList<String>();
+    public static List<String> matchIdfor2015 = new ArrayList<String>();
+    private static List<String> playersPlayedIn2015 = new ArrayList<String>();
+    private static LinkedHashMap<String, Integer> runsBowlerGvaeIn2015 = new LinkedHashMap<String, Integer>();
+    private static LinkedHashMap<String, Integer> oversPlayedByEachPlayerIn2015 = new LinkedHashMap<String, Integer>();
+    private static LinkedHashMap<String, Integer> moEconomicBowlers = new LinkedHashMap<String, Integer>();
+    private static ArrayList<String> tossWinnerDetails = new ArrayList<String>();
+    private static LinkedHashMap<String, Integer> noOfTimesEachTeamWonToss = new LinkedHashMap<String, Integer>();
+
+
     public static void ReadingFilematches() {
         int count_for_first_line = 0;
         String line = "";
@@ -69,22 +87,7 @@ public class storingAllData{
         }
     }
     
-    public static ArrayList<String> matchId = new ArrayList<String>();
-    public static ArrayList<String> teamsPlayed = new ArrayList<String>();
-    public static ArrayList<String> season = new ArrayList<String>();
-    public static ArrayList<String> winner = new ArrayList<String>();
-    public static int countMatch = 0;
-    public static ArrayList<String> matchIdfor2016 = new ArrayList<String>();
-    public static LinkedHashMap<String, Integer> extra_runs_by_teams_played_in_2016 = new LinkedHashMap<String, Integer>();
-    public static ArrayList<String> teamsPlayedIn2016 = new ArrayList<String>();
-    public static List<String> matchIdfor2015 = new ArrayList<String>();
-    public static List<String> playersPlayedIn2015 = new ArrayList<String>();
-    public static LinkedHashMap<String, Integer> runsBowlerGvaeIn2015 = new LinkedHashMap<String, Integer>();
-    public static LinkedHashMap<String, Integer> oversPlayedByEachPlayerIn2015 = new LinkedHashMap<String, Integer>();
-    public static LinkedHashMap<String, Integer> moEconomicBowlers = new LinkedHashMap<String, Integer>();
-    public static ArrayList<String> tossWinnerDetails = new ArrayList<String>();
-    public static LinkedHashMap<String, Integer> noOfTimesEachTeamWonToss = new LinkedHashMap<String, Integer>();
-
+    
     public static void allDataMatches(String[] matchesInfo){
         
         if(!(matchId.contains(matchesInfo[0]))){
@@ -154,6 +157,20 @@ public class storingAllData{
         
     }
 
+    public static void noOfMatchesPlayedINEachSeason(ArrayList<String> list)
+    {
+        Set<String> st = new HashSet<String>(list);
+        for (String s : st)
+            System.out.println(s + ": " + Collections.frequency(list, s));
+    }
+
+    public static void noOfMatchesWonOffAllTeams(ArrayList<String> teams, ArrayList<String> Winners){
+        Set<String> st = new HashSet<String>(teams);
+        for (String s : st)
+            System.out.println(s + ": " + Collections.frequency(Winners, s));
+
+    }
+
     public static void gettingTopEconomicalBowlers(LinkedHashMap<String, Integer> runs_bowler_gave, LinkedHashMap<String, Integer> balls_bowler_throw){
         for(Map.Entry<String, Integer> mapEle: balls_bowler_throw.entrySet()){
             int val = mapEle.getValue();
@@ -172,8 +189,6 @@ public class storingAllData{
             }
         }
         
-        
-
     }
     public static void teamThatWonMAximumToss(ArrayList<String> tossWinners){
 
@@ -206,18 +221,6 @@ public class storingAllData{
         
     }
 
-    public static void noOfMatchesPlayedINEachSeason(ArrayList<String> list)
-    {
-        Set<String> st = new HashSet<String>(list);
-        for (String s : st)
-            System.out.println(s + ": " + Collections.frequency(list, s));
-    }
-
-    public static void noOfMatchesWonOffAllTeams(ArrayList<String> teams, ArrayList<String> Winners){
-        Set<String> st = new HashSet<String>(teams);
-        for (String s : st)
-            System.out.println(s + ": " + Collections.frequency(Winners, s));
-
-    }
+    
 
 }
