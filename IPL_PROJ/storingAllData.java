@@ -1,4 +1,3 @@
-//package com.service;
 package IPL_PROJ;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,10 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Map.Entry;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 
 
@@ -181,17 +178,18 @@ public class storingAllData{
     public static void main(String[] args) {
         ReadingFilematches();
         ReadingFileDeliveries();
+        System.out.println("Number of matches played in each IPL season : ");
         noOfMatchesPlayedINEachSeason(season);
         System.out.println("");
+        System.out.println("Number of matches won of all teams : ");
         noOfMatchesWonOffAllTeams(teamsPlayed, winner);
         System.out.println("");
+        System.out.println("Extra runs by teams played in 2015 : ");
         System.out.println(extra_runs_by_teams_played_in_2016);
-        //System.out.println(matchIdfor2015);
-        //System.out.println(playersPlayedIn2015);
-        //System.out.println(runs_bowler_gave_in_2015);
+        System.out.println("");
+        System.out.println("Most Econimical Bowlers : ");
         gettingTopEconomicalBowlers(runs_bowler_gave_in_2015, overs_played_by_each_bowler_in_2015);
-        //System.out.println(overs_played_by_each_bowler_in_2015);
-
+        
     }
 
     public static void noOfMatchesPlayedINEachSeason(ArrayList<String> list)
