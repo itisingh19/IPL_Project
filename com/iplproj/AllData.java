@@ -1,4 +1,4 @@
-package IPL_PROJ;
+package com.iplproj;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,15 +11,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
-public class storingAllData {
+public class AllData {
 
     private static ArrayList<String> matchId = new ArrayList<String>();
     private static ArrayList<String> teamsPlayed = new ArrayList<String>();
     private static ArrayList<String> season = new ArrayList<String>();
     private static ArrayList<String> winner = new ArrayList<String>();
-    public static int countMatch = 0;
     private static ArrayList<String> matchIdfor2016 = new ArrayList<String>();
-    private static LinkedHashMap<String, Integer> extra_runs_by_teams_played_in_2016 = new LinkedHashMap<String, Integer>();
+    private static LinkedHashMap<String, Integer> extraRunsByTeamsPlayedIn2016 = new LinkedHashMap<String, Integer>();
     private static ArrayList<String> teamsPlayedIn2016 = new ArrayList<String>();
     public static List<String> matchIdfor2015 = new ArrayList<String>();
     private static List<String> playersPlayedIn2015 = new ArrayList<String>();
@@ -29,7 +28,7 @@ public class storingAllData {
     private static ArrayList<String> tossWinnerDetails = new ArrayList<String>();
     private static LinkedHashMap<String, Integer> noOfTimesEachTeamWonToss = new LinkedHashMap<String, Integer>();
 
-    public static void ReadingFilematches() {
+    public static void readingFileMatches() {
         int count_for_first_line = 0;
         String line = "";
         String Splitby = ",";
@@ -55,7 +54,7 @@ public class storingAllData {
         }
     }
 
-    public static void ReadingFileDeliveries() {
+    public static void readingFileDeliveries() {
         int count_for_first_line = 0;
         String line = "";
         String Splitby = ",";
@@ -86,8 +85,8 @@ public class storingAllData {
         if (!(matchId.contains(matchesInfo[0]))) {
             matchId.add(matchesInfo[0]);
         }
-        String two_zero_one_six = "2016";
-        String two_zero_one_five = "2015";
+        String twoZeroOneSix = "2016";
+        String twoZeroOneFive = "2015";
         matchId.add(matchesInfo[0]);
         season.add(matchesInfo[1]);
         tossWinnerDetails.add(matchesInfo[6]);
@@ -100,14 +99,14 @@ public class storingAllData {
             teamsPlayed.add(matchesInfo[5]);
         }
 
-        if (matchesInfo[1].equals(two_zero_one_six)) {
+        if (matchesInfo[1].equals(twoZeroOneSix)) {
             matchIdfor2016.add(matchesInfo[0]);
             if (!(teamsPlayedIn2016.contains(matchesInfo[4]))) {
                 teamsPlayedIn2016.add(matchesInfo[4]);
             }
         }
 
-        if (matchesInfo[1].equals(two_zero_one_five)) {
+        if (matchesInfo[1].equals(twoZeroOneFive)) {
             matchIdfor2015.add(matchesInfo[0]);
         }
         winner.add(matchesInfo[10]);
@@ -117,12 +116,12 @@ public class storingAllData {
     public static void allDataDeliveries(String[] deliveriesInfo) {
 
         int extra_runs = Integer.parseInt(deliveriesInfo[16]);
-        if (extra_runs_by_teams_played_in_2016.containsKey(deliveriesInfo[2])) {
-            int prev_runs = extra_runs_by_teams_played_in_2016.get(deliveriesInfo[2]);
-            extra_runs_by_teams_played_in_2016.put(deliveriesInfo[2], prev_runs + extra_runs);
+        if (extraRunsByTeamsPlayedIn2016.containsKey(deliveriesInfo[2])) {
+            int prev_runs = extraRunsByTeamsPlayedIn2016.get(deliveriesInfo[2]);
+            extraRunsByTeamsPlayedIn2016.put(deliveriesInfo[2], prev_runs + extra_runs);
 
         } else {
-            extra_runs_by_teams_played_in_2016.put(deliveriesInfo[2], extra_runs);
+            extraRunsByTeamsPlayedIn2016.put(deliveriesInfo[2], extra_runs);
         }
 
         if (matchIdfor2015.contains(deliveriesInfo[0])) {
@@ -140,7 +139,7 @@ public class storingAllData {
             } else {
                 int run_to_be_added = Integer.parseInt(deliveriesInfo[17]) - Integer.parseInt(deliveriesInfo[16]);
                 runsBowlerGvaeIn2015.put(deliveriesInfo[8], run_to_be_added);
-                oversPlayedByEachPlayerIn2015.put(deliveriesInfo[8], 1 / 6);
+                oversPlayedByEachPlayerIn2015.put(deliveriesInfo[8], 1 );
             }
 
         }
@@ -160,8 +159,7 @@ public class storingAllData {
 
     }
 
-    public static void gettingTopEconomicalBowlers(LinkedHashMap<String, Integer> runs_bowler_gave,
-            LinkedHashMap<String, Integer> balls_bowler_throw) {
+    public static void gettingTopEconomicalBowlers(LinkedHashMap<String, Integer> runs_bowler_gave,LinkedHashMap<String, Integer> balls_bowler_throw) {
         for (Map.Entry<String, Integer> mapEle : balls_bowler_throw.entrySet()) {
             int val = mapEle.getValue();
             balls_bowler_throw.put(mapEle.getKey(), val / 6);
@@ -185,14 +183,14 @@ public class storingAllData {
         Set<String> st = new HashSet<String>(tossWinners);
         for (String s : st)
             noOfTimesEachTeamWonToss.put(s, Collections.frequency(tossWinners, s));
-        String max_toss_winner_team = Collections.max(noOfTimesEachTeamWonToss.keySet());
-        System.out.println(max_toss_winner_team);
+        String maxTossWinnerTeam = Collections.max(noOfTimesEachTeamWonToss.keySet());
+        System.out.println(maxTossWinnerTeam);
 
     }
 
     public static void main(String[] args) {
-        ReadingFilematches();
-        ReadingFileDeliveries();
+        readingFileMatches();
+        readingFileDeliveries();
         System.out.println("Number of matches played in each IPL season : ");
         noOfMatchesPlayedINEachSeason(season);
         System.out.println("");
@@ -200,7 +198,7 @@ public class storingAllData {
         noOfMatchesWonOffAllTeams(teamsPlayed, winner);
         System.out.println("");
         System.out.println("Extra runs by teams played in 2015 : ");
-        System.out.println(extra_runs_by_teams_played_in_2016);
+        System.out.println(extraRunsByTeamsPlayedIn2016);
         System.out.println("");
         System.out.println("Most Econimical Bowlers : ");
         gettingTopEconomicalBowlers(runsBowlerGvaeIn2015, oversPlayedByEachPlayerIn2015);
